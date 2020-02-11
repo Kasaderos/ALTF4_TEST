@@ -131,7 +131,7 @@ func GetFromBinance(name string, timeout time.Duration) {
 			return
 		}
 		log.Println(fmt.Sprintf("%s %s", name, string(out)))
-		log.Println(string(message))
+		//log.Println(string(message))
 	}
 
 }
