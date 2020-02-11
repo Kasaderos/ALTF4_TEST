@@ -6,6 +6,7 @@ https://github.com/binance-exchange/binance-official-api-docs/blob/mster/rest-ap
 
 Endpoint
   wss://stream.binance.com:9443/ws/blabla@depth
+\n
 Ответ
   {
   "e": "depthUpdate", // Тип события
@@ -28,7 +29,7 @@ Endpoint
     ]
   ]
 }
-
+\n
 TODO 
   Можно вместо json использовать easyjson
   Вместо gorilla/websocket использовать gobwas/ws
