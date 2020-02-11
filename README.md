@@ -1,13 +1,12 @@
 # ALTF4_TEST
-Основной код в main.go
-Использованная документация:
-https://bablofil.ru/binance-webscokets/
-https://github.com/binance-exchange/binance-official-api-docs/blob/mster/rest-api.md
+Основной код в main.go  
+Использованная документация:  
+https://bablofil.ru/binance-webscokets/  
+https://github.com/binance-exchange/binance-official-api-docs/blob/mster/rest-api.md  
 
-Endpoint
-  wss://stream.binance.com:9443/ws/blabla@depth
-\n
-Ответ
+Endpoint  
+  wss://stream.binance.com:9443/ws/blabla@depth  
+Ответ  
   {
   "e": "depthUpdate", // Тип события
   "E": 123456789,     // Время события
@@ -28,12 +27,11 @@ Endpoint
       []              // Не актуально
     ]
   ]
-}
-\n
-TODO 
-  Можно вместо json использовать easyjson
-  Вместо gorilla/websocket использовать gobwas/ws
-  Вместо waitgroup использовать context
-  Вместо структур проще кажется map
+}  
+TODO   
+  Можно вместо json использовать easyjson  
+  Вместо gorilla/websocket использовать gobwas/ws  
+  Вместо waitgroup использовать context  
+  Вместо структур проще кажется map  
   
   
