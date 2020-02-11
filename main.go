@@ -99,20 +99,6 @@ func GetBidAsc(data []byte) ([]byte, error) {
 	return result, nil
 }
 
-// func GetPair(data []byte) {
-// 	var res interface{}
-// 	err := json.Unmarshal(data, &res)
-// 	if err != nil {
-// 		fmt.Println("error")
-// 		return
-// 	}
-// 	res2 := res.(map[string]interface{})
-// 	bids := res2["b"]
-// 	bids2 := bids.([]interface{})
-// 	bid := bids2[len(bids2)-1]
-// 	fmt.Println(bid)
-// }
-
 func GetFromBinance(name string, timeout time.Duration) {
 	u := url.URL{
 		Scheme: "wss",
@@ -125,31 +111,39 @@ func GetFromBinance(name string, timeout time.Duration) {
 		log.Fatal("dial:", err)
 	}
 	c.SetReadDeadline(time.Now().Add(timeout))
+	defer func() {
+		err = c.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}()
 	for {
 		_, message, err := c.ReadMessage()
 		if err != nil {
-			panic(err)
+			fmt.Println(err)
+			return
 		}
+		// можно вынести в горутину
 		out, err := GetBidAsc(message)
+
 		if err != nil {
-			log.Print("error")
-			break
+			log.Print(err)
+			return
 		}
 		log.Println(fmt.Sprintf("%s %s", name, string(out)))
-		//log.Println(string(message))
+		log.Println(string(message))
+	}
 
-	}
-	err = c.Close()
-	if err != nil {
-		fmt.Println("close error")
-	}
 }
 
 func main() {
 	wg := &sync.WaitGroup{}
 	for _, name := range names {
 		wg.Add(1)
-		go GetFromBinance(name, 30*time.Second)
+		go func(name string) {
+			defer wg.Done()
+			GetFromBinance(name, 3*time.Second)
+		}(name)
 	}
 	wg.Wait()
 }
